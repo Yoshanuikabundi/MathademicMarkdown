@@ -10,6 +10,7 @@ contexts:
     - include: scope:text.tex.latex#inline-math
     - include: scope:text.tex.latex#general-commands
     - include: scope:text.tex.latex#macros
+    - include: footnotes
     - include: citekeys
     - include: critic-addition
     - include: critic-substitution
@@ -278,6 +279,10 @@ contexts:
     - match: '@[\w:-]+'
       comment: This should highlight citekeys and @refs
       scope: string.other.link.description.title.markdown
+  footnotes:
+    - match: '\^\[.*?\]'
+      comment: This should highlight footnotes
+      scope: meta.image.reference.markdown
   critic-addition:
     - match: '\{\+\+(.*?)\+\+[ \t]*(\[(.*?)\])?[ \t]*\}'
       comment: Editorial Addition
@@ -534,6 +539,7 @@ contexts:
     - include: critic-deletion
     - include: critic-comment
     - include: citekeys
+    - include: footnotes
     - include: escape
     - include: ampersand
     - include: bracket

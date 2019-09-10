@@ -5,8 +5,9 @@ This extension to AcademicMarkdown adds an Mathademic Markdown language variant,
 
 ## Features
 - Highlighting for [CriticMarkup](http://criticmarkup.com/) notation
-- Highlighting for @Citekey notation (Pandoc version).
+- Highlighting for `@Citekey` notation (Pandoc version).
 - Highlighting for inline LaTeX, including maths
+- Highlighting for `^[]` footnote notation
 - Support for the [LatexTools](https://packagecontrol.io/packages/LaTeXTools) math preview feature
 
 ## Shortcuts
