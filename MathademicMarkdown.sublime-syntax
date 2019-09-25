@@ -314,10 +314,11 @@ contexts:
   pandoc-yaml-block:
     - match: '^---$'
       push:
-        - meta_scope: source.yaml.block.markdown
+        - meta_scope: source.yaml.block.markdown meta.image.reference.markdown
         - match: ^(---|...)\n
           pop: true
         - include: scope:source.yaml
+        - include: scope:source.yaml#comment
   fenced-c:
     - match: '^(\s*[`~]{3,})(c)\s*$'
       push:
@@ -494,6 +495,7 @@ contexts:
         - match: ^(\1)\n
           pop: true
         - include: scope:source.yaml
+        - include: scope:source.yaml#comment
   heading:
     - match: '\G(#{1,6})(?!#)\s*(?=\S)'
       captures:
