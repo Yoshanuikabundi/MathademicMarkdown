@@ -14,7 +14,6 @@ contexts:
     - include: critic-deletion
     - include: critic-comment
     - include: pandoc-yaml-block
-    - include: inline-latex
     - match: '^([A-Za-z0-9]+)(:)\s*'
       captures:
         1: keyword.other.multimarkdown
@@ -725,8 +724,6 @@ contexts:
         - include: inline
         - include: scope:text.html.basic
         - include: fenced-code-blocks
-        - include: scope:text.tex.latex#block-math
-        - include: scope:text.tex.latex#inline-math
   raw:
     - match: '(`+)((?:[^`]|(?!(?<!`)\1(?!`))`)*+)(\1)(\{[^\}]*\})?'
       scope: markup.raw.inline.markdown
