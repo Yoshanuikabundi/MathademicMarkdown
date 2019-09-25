@@ -6,10 +6,6 @@ first_line_match: ^Format:\s*(?i:complete)\s*$
 scope: text.html.markdown.academicmarkdown text.tex.latex
 contexts:
   main:
-    - include: scope:text.tex.latex#block-math
-    - include: scope:text.tex.latex#inline-math
-    - include: scope:text.tex.latex#general-commands
-    - include: scope:text.tex.latex#macros
     - include: footnotes
     - include: citekeys
     - include: critic-addition
@@ -17,6 +13,8 @@ contexts:
     - include: critic-highlight
     - include: critic-deletion
     - include: critic-comment
+    - include: pandoc-yaml-block
+    - include: inline-latex
     - match: '^([A-Za-z0-9]+)(:)\s*'
       captures:
         1: keyword.other.multimarkdown
@@ -308,6 +306,18 @@ contexts:
   escape:
     - match: '\\[-`*_#+.!(){}\[\]\\>]'
       scope: constant.character.escape.markdown
+  inline-latex:
+    - include: scope:text.tex.latex#block-math
+    - include: scope:text.tex.latex#inline-math
+    - include: scope:text.tex.latex#general-commands
+    - include: scope:text.tex.latex#macros
+  pandoc-yaml-block:
+    - match: '^---$'
+      push:
+        - meta_scope: source.yaml.block.markdown
+        - match: ^(---|...)\n
+          pop: true
+        - include: scope:source.yaml
   fenced-c:
     - match: '^(\s*[`~]{3,})(c)\s*$'
       push:
@@ -343,6 +353,7 @@ contexts:
     - include: fenced-js
     - include: fenced-ruby
     - include: fenced-python
+    - include: fenced-latex
     - include: fenced-undefined
   fenced-coffee:
     - match: '^(\s*[`~]{3,})(coffee)\s*$'
@@ -366,7 +377,7 @@ contexts:
           pop: true
         - include: scope:source.diff
   fenced-html:
-    - match: '^(\s*[`~]{3,})(html|html5)\s*$'
+    - match: '^(\s*[`~]{3,})(?:(html|html5)|\{=(html|html5)\})\s*$'
       push:
         - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
         - match: ^(\1)\n
@@ -380,12 +391,19 @@ contexts:
           pop: true
         - include: scope:source.java
   fenced-js:
-    - match: '^(\s*[`~]{3,})(js|json|javascript)\s*$'
+    - match: '^(\s*[`~]{3,})(?:(js|json|javascript)|\{=(json)\})\s*$'
       push:
         - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
         - match: ^(\1)\n
           pop: true
         - include: scope:source.js
+  fenced-latex:
+    - match: '^(\s*[`~]{3,})(?:(tex|latex|beamer)|\{=(tex|latex|beamer)\})\s*$'
+      push:
+        - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
+        - match: ^(\1)\n
+          pop: true
+        - include: scope:text.tex.latex
   fenced-less:
     - match: '^(\s*[`~]{3,})(less)\s*$'
       push:
@@ -463,7 +481,7 @@ contexts:
         - match: ^(\1)\n
           pop: true
   fenced-xml:
-    - match: '^(\s*[`~]{3,})(xml)\s*$'
+    - match: '^(\s*[`~]{3,})(?:(xml|openxml)|\{=(xml|openxml)\})\s*$'
       push:
         - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
         - match: ^(\1)\n
@@ -556,6 +574,7 @@ contexts:
     - include: link-ref-literal
     - include: link-ref
     - include: tag-kbd
+    - include: inline-latex
   italic:
     - match: |-
         (?x)
@@ -707,12 +726,13 @@ contexts:
         - include: scope:text.tex.latex#block-math
         - include: scope:text.tex.latex#inline-math
   raw:
-    - match: '(`+)((?:[^`]|(?!(?<!`)\1(?!`))`)*+)(\1)'
+    - match: '(`+)((?:[^`]|(?!(?<!`)\1(?!`))`)*+)(\1)(\{[^\}]*\})?'
       scope: markup.raw.inline.markdown
       captures:
         1: punctuation.definition.raw.markdown
         2: markup.raw.inline.content.markdown
         3: punctuation.definition.raw.markdown
+        4: punctuation.definition.metadata.markdown
   separator:
     - match: '\G[ ]{,3}([-*_])([ ]{,2}\1){2,}[ \t]*$\n?'
       scope: meta.separator.markdown
