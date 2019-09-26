@@ -3,7 +3,7 @@
 # http://www.sublimetext.com/docs/3/syntax.html
 name: MathademicMarkdown
 first_line_match: ^Format:\s*(?i:complete)\s*$
-scope: text.html.markdown.academicmarkdown
+scope: text.html.markdown.academicmarkdown text.tex.latex
 contexts:
   main:
     - include: footnotes
