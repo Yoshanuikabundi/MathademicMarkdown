@@ -513,7 +513,7 @@ contexts:
         1: string.other.link.description.title.markdown
         2: punctuation.definition.string.begin.markdown
       push:
-        - meta_scope: meta.image.inline.markdown markup.italic.markdown
+        - meta_scope: meta.image.inline.markdown
         - include: inline
         - match: |-
             (?x:
