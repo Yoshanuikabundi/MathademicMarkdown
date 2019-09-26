@@ -508,39 +508,44 @@ contexts:
           pop: true
         - include: inline
   image-inline:
-    - match: |-
-        (?x:
-                \!              # Images start with !
-                (\[)((?<square>[^\[\]\\]|\\.|\[\g<square>*+\])*+)(\])
-                              # Match the link text.
-                ([ ])?            # Space not allowed
-                (\()            # Opening paren for url
-                  (<?)(\S+?)(>?)      # The url
-                  [ \t]*          # Optional whitespace
-                  (?:
-                      ((\().+?(\)))   # Match title in parens…
-                    | ((").+?("))   # or in quotes.
-                  )?            # Title is optional
-                  \s*           # Optional whitespace
-                (\))
-               )
-      scope: meta.image.inline.markdown
+    - match: '(\!)(\[)'
       captures:
-        1: punctuation.definition.string.begin.markdown
-        2: string.other.link.description.markdown
-        4: punctuation.definition.string.end.markdown
-        5: invalid.illegal.whitespace.markdown
-        6: punctuation.definition.metadata.markdown
-        7: punctuation.definition.link.markdown
-        8: markup.underline.link.image.markdown
-        9: punctuation.definition.link.markdown
-        10: string.other.link.description.title.markdown
-        11: punctuation.definition.string.markdown
-        12: punctuation.definition.string.markdown
-        13: string.other.link.description.title.markdown
-        14: punctuation.definition.string.markdown
-        15: punctuation.definition.string.markdown
-        16: punctuation.definition.metadata.markdown
+        1: string.other.link.description.title.markdown
+        2: punctuation.definition.string.begin.markdown
+      push:
+        - meta_scope: meta.image.inline.markdown markup.italic.markdown
+        - include: inline
+        - match: |-
+            (?x:
+                    (\])
+                                  # Match the link text.
+                    ([ ])?            # Space not allowed
+                    (\()            # Opening paren for url
+                      (<?)(\S+?)(>?)      # The url
+                      [ \t]*          # Optional whitespace
+                      (?:
+                          ((\().+?(\)))   # Match title in parens…
+                        | ((").+?("))   # or in quotes.
+                      )?            # Title is optional
+                      \s*           # Optional whitespace
+                    (\))
+                   )
+          pop: true
+          scope: meta.image.inline.markdown
+          captures:
+            1: punctuation.definition.string.end.markdown
+            2: invalid.illegal.whitespace.markdown
+            3: punctuation.definition.metadata.markdown
+            4: punctuation.definition.link.markdown
+            5: markup.underline.link.image.markdown
+            6: punctuation.definition.link.markdown
+            7: string.other.link.description.title.markdown
+            8: punctuation.definition.string.markdown
+            9: punctuation.definition.string.markdown
+            10: string.other.link.description.title.markdown
+            11: punctuation.definition.string.markdown
+            12: punctuation.definition.string.markdown
+            13: punctuation.definition.metadata.markdown
   image-ref:
     - match: '\!(\[)((?<square>[^\[\]\\]|\\.|\[\g<square>*+\])*+)(\])[ ]?(\[)(.*?)(\])'
       scope: meta.image.reference.markdown
