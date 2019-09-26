@@ -529,6 +529,7 @@ contexts:
                       )?            # Title is optional
                       \s*           # Optional whitespace
                     (\))
+                    (\{[^\}]*?\}) # Match attributes
                    )
           pop: true
           scope: meta.image.inline.markdown
@@ -546,6 +547,7 @@ contexts:
             11: punctuation.definition.string.markdown
             12: punctuation.definition.string.markdown
             13: punctuation.definition.metadata.markdown
+            14: punctuation.definition.metadata.markdown
   image-ref:
     - match: '\!(\[)((?<square>[^\[\]\\]|\\.|\[\g<square>*+\])*+)(\])[ ]?(\[)(.*?)(\])'
       scope: meta.image.reference.markdown
