@@ -1,35 +1,37 @@
 [
-    {
-        "caption": "Preferences",
-        "mnemonic": "n",
-        "id": "preferences",
-        "children":
-        [
-            {
-                "caption": "Package Settings",
-                "mnemonic": "P",
-                "id": "package-settings",
-                "children":
-                [
-                    {
-                        "caption": "MathademicMarkdown",
-                        "children":
-                        [
-                            {
-                                "command": "open_file",
-                                "args": {"file": "${packages}/MathademicMarkdown/MathademicMarkdown.sublime-settings"},
-                                "caption": "MathademicMarkdown Settings – Default"
-                            },
-                            {
-                                "command": "open_file",
-                                "args": {"file": "${packages}/User/MathademicMarkdown.sublime-settings"},
-                                "caption": "MathademicMarkdown Settings – User"
-                            }
-
-                        ]
-                    }
-                ]
-            }
+  { "id": "preferences",
+    "children": [
+      { "caption": "Package Settings",
+        "mnemonic": "P",
+        "id": "package-settings",
+        "children": [
+          { "caption": "MathademicMarkdown",
+            "children": [
+              { "caption": "README",
+                "command": "open_file",
+                "args": {
+                  "file": "${packages}/MathademicMarkdown/README.md"
+                }
+              },
+              { "caption": "-" },
+              { "caption": "Settings",
+                "command": "edit_settings",
+                "args": {
+                  "base_file": "${packages}/MathademicMarkdown/MathademicMarkdown.sublime-settings",
+                  "default": "{\n\t$0\n}\n"
+                }
+              },
+              { "caption": "Key Bindings",
+                "command": "edit_settings",
+                "args": {
+                  "base_file": "${packages}/MathademicMarkdown/Default (${platform}).sublime-keymap",
+                  "default": "[\n\t$0\n]\n"
+                }
+              },
+            ]
+          }
         ]
-    }
+      }
+    ]
+  }
 ]
