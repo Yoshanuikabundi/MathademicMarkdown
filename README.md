@@ -1,21 +1,26 @@
-# Mathademic Markdown
-This extension to AcademicMarkdown adds an Mathademic Markdown language variant, currently under development.
+# MathademicMarkdown
+This extension to AcademicMarkdown adds an MathademicMarkdown language variant that supports more of Pandoc's syntax features.
 
-**IMPORTANT: REQUIRES [MARKDOWNEDITING](https://packagecontrol.io/packages/MarkdownEditing) AND [ACADEMICMARKDOWN](https://packagecontrol.io/packages/AcademicMarkdown) TO BE INSTALLED**
+## Acknowledgements
+
+This package would not exist without the efforts of the authors of the MarkdownEditing, AcademicMarkdown and LaTeXTools packages, all of which I have borrowed from extensively.
+
+## Requirements
+For intended functionality, MathademicMarkdown requires
+ - [MarkdownEditing](https://packagecontrol.io/packages/MarkdownEditing) for a few settings
+ - [LaTeXTools](https://packagecontrol.io/packages/AcademicMarkdown) for maths previews
 
 ## Features
 - Highlighting for [CriticMarkup](http://criticmarkup.com/) notation
-- Highlighting for `@Citekey` notation (Pandoc version).
+- Highlighting for Pandoc's `@Citekey` notation
 - Highlighting for inline LaTeX, including maths
 - Highlighting for `^[]` footnote notation
-- Support for the [LatexTools](https://packagecontrol.io/packages/LaTeXTools) math preview feature
-
-## Shortcuts
-Create comment/turn selection into comment: Cmd+shit+c (OSX), Ctrl+shit+c (Win/Linux)
+- Highlighting for Pandoc's raw attribute extension, both in blocks and inline
+- Support for the [LaTeXTools](https://packagecontrol.io/packages/LaTeXTools) math preview feature
 
 ## Installation
-AcademicMarkdown can be installed from a source archive by unzipping into your Sublime Text "Packages" folder (make sure the extracted folder is named AcademicMarkdown).
+MathademicMarkdown can be installed from a source archive by unzipping into your Sublime Text "Packages" folder (make sure the extracted folder is named MathademicMarkdown).
 
 ## Citations
 
-[JAMCiter](https://github.com/yoshanuikabundi/JAMCiter) - SublimeText 3 plugin to insert citations from Bibtex, CrossRef or PubMed into your markdown file
+[JAMCiter](https://github.com/yoshanuikabundi/JAMCiter) - SublimeText 3 plugin to insert citations from a Bibtex file, or the CrossRef and PubMed web APIs into your markdown file
