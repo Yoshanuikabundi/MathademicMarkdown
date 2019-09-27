@@ -46,5 +46,15 @@
     // FullScreenStatus plugin: https://github.com/maliayas/SublimeText_FullScreenStatus
     "mde.distraction_free_mode": {
         "mde.keep_centered": true
-    }
+    },
+
+    // Scopes that generate math previews
+    "preview_math_scope": "meta.environment.math.block.dollar.latex|meta.environment.math.inline.dollar.latex",
+
+    // Whether to guess the environment (equation, multline or align) in
+    // Markdown $$ ... $$ blocks. As this is a syntax setting file, it
+    // will override project files; however, the
+    // mathademicmarkdown_guess_math_environment setting will override
+    // guess_math_environment
+    "guess_math_environment": false,
 }
