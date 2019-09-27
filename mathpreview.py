@@ -1,16 +1,24 @@
 from functools import partial
+import sys
 
 import sublime
 import sublime_plugin
 
-from LaTeXTools.st_preview.preview_math import (
-    MathPreviewPhantomListener,
-    default_latex_template
-)
+try:
+    from LaTeXTools.st_preview.preview_math import (
+        MathPreviewPhantomListener,
+        default_latex_template
+    )
 
-from LaTeXTools.latextools_utils.settings import _get_setting
-from LaTeXTools.latextools_utils.utils import run_on_main_thread
-
+    from LaTeXTools.latextools_utils.settings import _get_setting
+    from LaTeXTools.latextools_utils.utils import run_on_main_thread
+except ImportError as E:
+    print(
+        "MATHADEMICMARKDOWN: LaTeXTools not installed; I can't enable",
+        "math previews, but you can otherwise ignore the following traceback",
+        file=sys.stderr
+    )
+    raise E
 
 # Have view settings prefixed with 'mathademicmarkdown_' override everything
 def get_setting(setting, default=None, view=None):
