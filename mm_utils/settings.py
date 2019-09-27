@@ -23,28 +23,32 @@ def get_setting(setting, default=None, view=None):
 
 
 def _get_setting(setting, default=None, view=None):
-    advanced_settings = sublime.load_settings(
-        'LaTeXTools (Advanced).sublime-settings')
-    global_settings = sublime.load_settings('LaTeXTools.sublime-settings')
+    global_settings = sublime.load_settings('MathademicMarkdown.sublime-settings')
 
     try:
         if view is None:
             view_settings = sublime.active_window().active_view().settings()
+            project_data = sublime.active_window().project_data()
+            project_settings = project_data['settings']['mathademicmarkdown']
         elif isinstance(view, sublime.View):
             view_settings = view.settings()
+            project_data = view.window().project_data()
+            project_settings = project_data['settings']['mathademicmarkdown']
         else:
             view_settings = {}
+            project_settings = {}
     except:
         # no view defined or view invalid
         view_settings = {}
+        project_settings = {}
 
-    result = view_settings.get(setting)
+    result = project_settings.get(setting)
+
+    if result is None:
+        result = view_settings.get(setting)
 
     if result is None:
         result = global_settings.get(setting)
-
-    if result is None:
-        result = advanced_settings.get(setting, default)
 
     if result is None or '':
         result = default
@@ -52,9 +56,9 @@ def _get_setting(setting, default=None, view=None):
     if isinstance(result, sublime.Settings) or isinstance(result, dict):
         values = {}
         for s in (
-            advanced_settings.get(setting, {}),
             global_settings.get(setting, {}),
             view_settings.get(setting, {}),
+            project_settings.get(setting, {}),
             result
         ):
             # recursively load settings

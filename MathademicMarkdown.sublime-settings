@@ -46,5 +46,75 @@
     // FullScreenStatus plugin: https://github.com/maliayas/SublimeText_FullScreenStatus
     "mde.distraction_free_mode": {
         "mde.keep_centered": true
-    }
+    },
+
+// ------------------------------------------------------------------
+// Preview settings
+// ------------------------------------------------------------------
+
+    // These settings are identical to those from LaTeXTools
+    // They are redefined here so that they take over automatically
+    // for MathademicMarkdown files.
+
+    // MATH LIVE PREVIEW
+
+    // The preview mode for math live preview, possible values are:
+    // "all"       to show a phantom for each math environment
+    // "selected"  to show a phantom only for the currently selected math environment
+    // "none"      to disable math live preview
+    "preview_math_mode": "selected",
+
+    // Change the scope selectors to preview math
+    "preview_math_scope": "meta.environment.math.block.dollar.latex|meta.environment.math.inline.dollar.latex",
+
+    // The program to compile the latex template files, possible values are
+    // pdflatex, xelatex, lualatex, latex
+    // DON'T(!) use tex engines like pdftex
+    "preview_math_latex_compile_program": "pdflatex",
+
+    // The color of the text in the preview math phantoms.
+    // Ensure you have the latex xcolor package available to change the color.
+    // The format can either be RGB based "#RRGGBB" (e.g. "#FFFF00")
+    // or a color name (e.g. "yellow")
+    // If it is the empty string "" it will be guessed based in the color scheme.
+    "preview_math_color": "",
+
+    // The background color of the preview math phantoms.
+    // In contrast to the foreground color you may also edit your colorscheme to change this.
+    // The format can either be RGB(A) based "#RRGGBB" (e.g. "#0000FF50")
+    // or a color name (e.g. "blue")
+    // If it is the empty string "" the default color will be used.
+    "preview_math_background_color": "",
+
+    // An array of the used packages, from which the file for the live preview
+    // will be generated.
+    // Just write \\usepackage{packagename} to include other packages.
+    // (The xcolor package will be present, even if not in this list.)
+    "preview_math_template_packages": [
+        "\\usepackage{amsmath}",
+        "\\usepackage{amssymb}",
+        "\\IfFileExists{latexsym.sty}{\\usepackage{latexsym}}{}",
+        "\\IfFileExists{mathtools.sty}{\\usepackage{mathtools}}{}"
+    ],
+
+    // An string of the remaining preamble (not packages) for the file,
+    // which generates the math live preview.
+    // Can also be an array, with an string for each line (as in the packages).
+    // For technical reasons DON'T include other files.
+    "preview_math_template_preamble": "",
+
+    // The preview functionality by default appends a star (*) to each
+    // math environments, since we cannot and want not track the
+    // equation numbers. This may not be possible with each environment,
+    // therefore you can create a blacklist of such environments here.
+    "preview_math_no_star_envs": ["displaymath"],
+
+    // The density of the preview image. The higher the density the bigger the phantom.
+    "preview_math_density": 150,
+    // If the image is not sharp enough increase this scale to get a better resolution.
+    // However also change the density by the same factor to keep the size.
+    "preview_math_scale_quotient": 1,
+    // If this is true, the image will be rendered at a higher resolution and
+    // then scaled down. This generally results in a clearer image.
+    "preview_math_hires": true,
 }
