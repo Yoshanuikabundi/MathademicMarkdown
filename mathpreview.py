@@ -31,7 +31,7 @@ def _mm_get_setting(setting, default=None, view=None):
             view_settings = view.settings()
         else:
             view_settings = {}
-    except:
+    except Exception:
         # no view defined or view invalid
         view_settings = {}
 
@@ -44,6 +44,14 @@ def _mm_get_setting(setting, default=None, view=None):
 
 
 class MarkdownMathPreviewPhantomListener(MathPreviewPhantomListener):
+    # Hack to stop _create_document from stopping the main thread
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.guess_env = get_setting(
+            "guess_math_environment",
+            False
+        )
+
     # Make applicable on MathademicMarkdown files
     @classmethod
     def is_applicable(cls, settings):
@@ -53,6 +61,14 @@ class MarkdownMathPreviewPhantomListener(MathPreviewPhantomListener):
         )
 
     # Redefine hooks so that sublime sees them
+    def on_selection_modified(self, *args, **kwargs):
+        # Well, this one also updates the guess_math_environment setting
+        self.guess_env = get_setting(
+            "guess_math_environment",
+            False
+        )
+        super().on_selection_modified(*args, **kwargs)
+
     def on_after_modified_async(self, *args, **kwargs):
         super().on_after_modified_async(*args, **kwargs)
 
@@ -61,9 +77,6 @@ class MarkdownMathPreviewPhantomListener(MathPreviewPhantomListener):
 
     def on_after_selection_modified_async(self, *args, **kwargs):
         super().on_after_selection_modified_async(*args, **kwargs)
-
-    def on_selection_modified(self, *args, **kwargs):
-        super().on_selection_modified(*args, **kwargs)
 
     def on_navigate(self, *args, **kwargs):
         super().on_navigate(*args, **kwargs)
@@ -74,12 +87,7 @@ class MarkdownMathPreviewPhantomListener(MathPreviewPhantomListener):
         content = view.substr(scope)
         env = None
 
-        guess_env = get_setting(
-            "guess_math_environment",
-            False
-        )
-
-        if content[0:2] == "$$" and guess_env:
+        if content[0:2] == "$$" and self.guess_env:
             if r'\\' in content and content.count('&') > content.count(r'\&'):
                 env = 'align'
             elif r'\\' in content:
