@@ -495,6 +495,15 @@ contexts:
           pop: true
         - include: scope:source.yaml
         - include: scope:source.yaml#comment
+  attributes-eol:
+    - match: '(\{)(?=[^\{\}]*\}$)'
+      captures:
+        1: punctuation.definition.metadata.markdown
+      embed: scope:text.html.basic#tag-attributes
+      embed_scope: punctuation.definition.metadata.markdown
+      escape: '(\})$'
+      escape_captures:
+        1: punctuation.definition.metadata.markdown
   heading:
     - match: '\G(#{1,6})(?!#)\s*(?=\S)'
       captures:
@@ -502,12 +511,15 @@ contexts:
       push:
         - meta_scope: markup.heading.markdown
         - meta_content_scope: entity.name.section.markdown
-        - match: \s*(#*)$\n?
+        - match: '\s*(#*)(?=(\s*\{[^\{\}]*\})?$\n?)'
           captures:
             1: punctuation.definition.heading.markdown
+        - include: attributes-eol
+        - match: '$\n?'
           pop: true
         - include: inline
   image-inline:
+    - include: attributes-eol
     - match: '(\!)(\[)'
       captures:
         1: string.other.link.description.title.markdown
@@ -529,7 +541,6 @@ contexts:
                       )?            # Title is optional
                       \s*           # Optional whitespace
                     (\))
-                    (\{[^\}]*?\}) # Match attributes
                    )
           pop: true
           scope: meta.image.inline.markdown
@@ -547,7 +558,6 @@ contexts:
             11: punctuation.definition.string.markdown
             12: punctuation.definition.string.markdown
             13: punctuation.definition.metadata.markdown
-            14: punctuation.definition.metadata.markdown
   image-ref:
     - match: '\!(\[)((?<square>[^\[\]\\]|\\.|\[\g<square>*+\])*+)(\])[ ]?(\[)(.*?)(\])'
       scope: meta.image.reference.markdown
