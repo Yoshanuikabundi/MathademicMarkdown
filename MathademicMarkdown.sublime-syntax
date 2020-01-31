@@ -275,7 +275,7 @@ contexts:
   citekeys:
     - match: '@[\w:-]+'
       comment: This should highlight citekeys and @refs
-      scope: string.other.link.description.title.markdown
+      scope: constant.other.reference.link.markdown
   footnotes:
     - match: '\^\[.*?\]'
       comment: This should highlight footnotes
