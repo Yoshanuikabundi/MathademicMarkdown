@@ -324,11 +324,12 @@ contexts:
       captures:
         1: punctuation.definition.raw.markdown
       push:
-        - meta_scope: markup.raw.block.markdown
+        - meta_scope: markup.div.markdown
         - match: ^(\1)\n
           captures:
             1: punctuation.definition.raw.markdown
           pop: true
+        - include: main
   fenced-c:
     - match: '^(\s*[`~]{3,})(c)\s*$'
       push:

@@ -914,6 +914,19 @@
         </dict>
         <dict>
             <key>name</key>
+            <string>Fenced Div</string>
+            <key>scope</key>
+            <string>
+                text.html.markdown markup.div.markdown
+            </string>
+            <key>settings</key>
+            <dict>
+                <key>background</key>
+                <string>#F2F2F2</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
             <string>Blockquote (Keyboard Shortcut)</string>
             <key>scope</key>
             <string>text.html.markdown markup.quote.markdown markup.kbd.content.markdown</string>
