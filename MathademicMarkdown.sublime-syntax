@@ -356,6 +356,7 @@ contexts:
     - include: fenced-c
     - include: fenced-c++
     - include: fenced-yaml
+    - include: fenced-rust
     - include: fenced-sql
     - include: fenced-shell
     - include: fenced-sass
@@ -416,6 +417,13 @@ contexts:
         - match: ^(\1)\n
           pop: true
         - include: scope:text.tex.latex
+  fenced-rust:
+    - match: '^(\s*[`~]{3,})(?:(rust|rs)|\{=(rust|rs)\})\s*$'
+      push:
+        - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
+        - match: ^(\1)\n
+          pop: true
+        - include: scope:source.rust
   fenced-less:
     - match: '^(\s*[`~]{3,})(less)\s*$'
       push:
